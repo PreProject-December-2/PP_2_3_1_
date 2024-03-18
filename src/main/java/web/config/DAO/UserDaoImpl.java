@@ -22,6 +22,7 @@ public class UserDaoimpl implements UserDao {
     private EntityManager entityManager;
 
     @Override
+    @Transactional
     public List<User> getAllUser() {
 
         List<User> users = entityManager.createQuery("from User ", User.class).getResultList();
@@ -30,18 +31,21 @@ public class UserDaoimpl implements UserDao {
     }
 
     @Override
+    @Transactional
     public void saveUser(User user) {
         entityManager.merge(user);
         entityManager.flush();
     }
 
     @Override
+    @Transactional
     public User getUser(int id) {
         User user = entityManager.find(User.class, id);
         return user;
     }
 
     @Override
+    @Transactional
     public void deleteUser(int id) {
         Query query = entityManager.createQuery("DELETE FROM User u WHERE u.id = :userId");
         query.setParameter("userId", id);
